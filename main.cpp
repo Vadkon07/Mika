@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -27,7 +29,20 @@ public:
 	
     void play() {
 	happiness += 10;
-	cout << name << ": Hahaha, I like to play with you! :*" << endl;
+
+	srand(time(0));
+
+	int randomNum = rand() % 4;
+
+	if (randomNum = 1) {
+		cout << name << ": Hahaha, I like to play with you! :*" << endl;
+	}
+	if (randomNum = 2) {
+		cout << name << ": It was funny!" << endl;
+	}
+	else {
+	    cout << name << ": Try to chase me ahaha!" << endl;
+    }
     }
 
     void feed() {
@@ -66,11 +81,13 @@ public:
 
     void status() {
         cout << "Name: " << name << endl;
-        cout << "Food: " << food << endl;
+	cout << "Happiness: " << happiness << endl;
+	cout << "Food: " << food << endl;
         cout << "Water: " << water << endl;
         cout << "Hygiene: " << hygiene << endl;
         cout << "Level: " << level << endl;
         cout << "XP: " << xp << endl;
+	cout << "Money: SOON" << endl;
     }
 
     void saveToFile() {
@@ -81,6 +98,7 @@ public:
         file << hygiene << endl;
         file << level << endl;
         file << xp << endl;
+	file << happiness << endl;
         file.close();
     }
 
@@ -93,6 +111,7 @@ public:
             file >> hygiene;
             file >> level;
             file >> xp;
+	    file >> happiness;
 	    file.close();
         }
     }
