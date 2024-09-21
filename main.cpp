@@ -22,6 +22,12 @@ public:
         hygiene = 100;
         level = 1;
         xp = 0;
+	happiness = 50;
+    }
+	
+    void play() {
+	happiness += 10;
+	cout << name << ": Hahaha, I like to play with you! :*" << endl;
     }
 
     void feed() {
@@ -98,10 +104,11 @@ public:
 	    //cout << "Game saved!" << endl; //for debug
 
             cout << "\nWhat do you want to do?" << endl;
+	    cout << "8. Play with " << name << endl;
             cout << "1. Feed" << endl;
             cout << "2. Give Water" << endl;
             cout << "3. Clean" << endl;
-            cout << "4. Check Status" << endl;
+            cout << "4. Check Status of " << name << endl;
             cout << "5. Save" << endl;
             cout << "6. Load" << endl;
             cout << "7. Exit" << endl;
@@ -109,6 +116,9 @@ public:
             cin >> choice;
 
             switch (choice) {
+		case 8:
+		    play();
+		    break;
                 case 1:
                     feed();
                     break;
@@ -149,7 +159,7 @@ public:
         if (hygiene < 50) {
             cout << name << ": I need a bath!" << endl;
         }
-	if (happiness < 50) {
+	if (happiness < 60) {
 		cout << name << ": Bu, I feel me sad. Do something with me!" << endl;
     	}
     }
