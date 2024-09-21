@@ -1,23 +1,50 @@
 # Mika
 
-Mika that's the best Tamagotchi clone on C++ which is always with you on your computer.
+Mika is the ultimate Tamagotchi clone, meticulously crafted in C++ to be your constant digital companion on your computer. Whether you're at work, home, or on the go, Mika is always there to keep you company and bring a smile to your face.
 
 ## Review
 
-Mika that's your portable digital girlfriend which is always near you. You have to give a food to her, give a water to her, play with her, etc.
-
-A lot of people in last years are very lonely, and it's not difficult to find a guy which dreams about girlfiend. And if you = this guy, we created a Mika for you!
+Mika is your portable digital girlfriend, designed to be by your side at all times. You need to take care of her by feeding her, giving her water, playing with her, and ensuring she stays happy and healthy. In recent years, many people have experienced loneliness, and it's not uncommon to find someone dreaming of a companion. If you are one of those people, Mika is here for you!
 
 ## Features
 
-1) Auto-save
-2) Terminal-based
-3) Fast
+1. **Auto-save:** Mika automatically saves your progress, so you never have to worry about losing your data (but still can save your progress manually in menu).
+2. **Terminal-based:** Mika runs directly in your terminal, making it lightweight and easy to use on any system.
+3. **Fast:** Mika is optimized for speed, ensuring smooth and responsive interactions.
 
 ## To-Do
 
-1. **Add ASCII arts of Mika:** They depends from happiness etc. They will be shown in main menu.
-2. **Optimise code:** Reorganise it and make it more readable.
-3. **Add different phrased for Mika:** Every time when you do something with her she should pronounce something new.
-3.1 + add voice pronunciation. We have to find a girl with a cure voice which will help us to vocalize this app.
-4. **Customization:** You can always change a name of your "Mika".
+1. **Add ASCII arts of Mika:** Depending on her happiness level, different ASCII art representations of Mika will be shown in the main menu.
+2. **Optimize code:** Reorganize and refactor the code to make it more readable and efficient.
+3. **Add different phrases for Mika:** Mika should have a variety of phrases to say each time you interact with her, making the experience more dynamic and engaging.
+   1. **Voice pronunciation:** Find a girl with a cute voice to help vocalize Mika's phrases, adding an auditory dimension to the experience.
+4. **Customization:** Allow users to change Mika's name, personalizing their experience even further.
+
+## Detailed Description
+
+Mika is more than just a digital pet; she's a companion designed to bring joy and companionship to your daily life. With Mika, you can experience the nostalgia of classic Tamagotchi games while enjoying modern features and enhancements. Mika's terminal-based interface ensures that she is always accessible, whether you're coding, writing, or just browsing the web.
+
+### Interaction
+
+Interacting with Mika is simple and intuitive. You can feed her, give her water, play games with her, and even talk to her. Each interaction affects Mika's happiness and health, so it's important to take good care of her. Mika's responses are designed to be engaging and varied, ensuring that you never get bored of her company.
+
+### Customization
+
+One of Mika's standout features is the ability to customize her. You can change her name, and in future updates, you'll be able to customize her appearance and personality traits. This level of personalization makes Mika feel like a truly unique companion.
+
+### Future Plans
+
+The development of Mika is ongoing, with many exciting features planned for future updates. These include:
+
+- **Advanced AI:** Implementing more sophisticated AI to make Mika's interactions more lifelike and responsive.
+- **Mini-games:** Adding a variety of mini-games that you can play with Mika, providing more ways to interact and bond with her.
+- **Social Features:** Allowing Mika to interact with other digital pets, creating a virtual community of companions.
+
+### Community and Feedback
+
+We believe that the best products are built with the input of their users. That's why we're always open to feedback and suggestions from the Mika community. Whether you have ideas for new features, improvements, or just want to share your experiences with Mika, we'd love to hear from you.
+
+### Conclusion
+
+Mika is more than just a digital pet; she's a friend who is always there for you. With her charming personality, customizable features, and engaging interactions, Mika is sure to become a beloved part of your daily routine. Whether you're feeling lonely or just looking for a fun and nostalgic experience, Mika is the perfect companion to brighten your day.
+
