@@ -17,6 +17,7 @@ private:
     int happiness;
     int money;
     string userName;
+    int askMoneyDelay;
 
 public:
     Tamagotchi(string name) {
@@ -28,7 +29,8 @@ public:
         xp = 0;
 	happiness = 50;
 	money = 0;
-	userName = "User"; //SET YOUR NAME INSTEAD
+	userName = "User"; //set your name instead + + + + + + + + + + NOTICE IT PLEASE + + + + + + + + + +
+	askMoneyDelay = 0;
     } //that's if you don't have a saved game
 	
     void play() {
@@ -125,6 +127,7 @@ public:
         file << xp << endl;
 	file << happiness << endl;
 	file << money << endl;
+	file << askMoneyDelay;
         file.close();
     }
 
@@ -139,8 +142,41 @@ public:
             file >> xp;
 	    file >> happiness;
 	    file >> money;
+	    file >> askMoneyDelay;
 	    file.close();
         }
+    }
+
+    void earnMoney() {
+	    int earnMoneyChoice;
+	    bool loop = true;
+
+	    cout << "Choose a way to earn money:" << endl;
+	    cout << "1. Random number" << endl;
+	    cout << "2. Ask " << name << "'s mother for money" << endl;
+	    cout << "0. Go back" << endl; //complete pls
+	    
+	    cin >> earnMoneyChoice;
+
+	    switch(earnMoneyChoice) {
+		    case 1:
+			    cout << name << ": Haha, let's play! (SOON)" << endl;
+			    break;
+		    case 2:
+			    if (askMoneyDelay > 100) {
+				    cout << name << "'s mother: Okay, that's for you. These money only for my daughter!" << endl;
+				    money += 20;
+				    askMoneyDelay = 0;
+				    return;
+		   	    } else {
+				    cout << name << "'s mother: Hey, I can't give you money too often!" << endl;
+				    cout << "(Steps: " << askMoneyDelay << "/100)" << endl;
+				    return;
+			    }
+		    default:
+		    	cout << name << ": Um, can you repeat please? (Wrong choice)" << endl;
+		    	return;
+	    }
     }
 
     void menu() {
@@ -159,6 +195,8 @@ public:
 	    hygiene -= randomWater;
 	    happiness -= randomHappiness;
 
+	    askMoneyDelay += 1;
+
 	    saveToFile();
 
             cout << "\nWhat do you want to do?\n" << endl;
@@ -168,6 +206,7 @@ public:
             cout << "4. Clean" << endl;
             cout << "5. Check Status of " << name << endl;
 	    cout << "6. Pat the head of " << name << endl;
+	    cout << "7. Earn money" << endl;
             cout << "0. Exit\n" << endl;
 	    cout << "Enter your choice: ";
             cin >> choice;
@@ -201,6 +240,10 @@ public:
 		    clrScr();
 		    patHead();
 		    break;
+		case 7:
+		    clrScr();
+		    earnMoney();
+		    break;
                 default:
                     cout << "Invalid choice. Please try again." << endl;
             }
@@ -226,6 +269,11 @@ public:
 	if (water < 0) water = 0;
 	if (hygiene < 0) hygiene = 0;
 	if (happiness < 0) happiness = 0;
+
+	if (food > 100) food = 100;
+	if (water > 100) water = 100;
+	if (hygiene > 100) hygiene = 100;
+	if (happiness > 100) happiness = 100;
     }
 };
 
