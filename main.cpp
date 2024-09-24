@@ -16,6 +16,7 @@ private:
     int xp;
     int happiness;
     int money;
+    string userName;
 
 public:
     Tamagotchi(string name) {
@@ -26,14 +27,17 @@ public:
         level = 1;
         xp = 0;
 	happiness = 50;
-    }
+	money = 0;
+	userName = "User"; //SET YOUR NAME INSTEAD
+    } //that's if you don't have a saved game
 	
     void play() {
 	happiness += 10;
 
 	if (happiness > 100) {
 		happiness = 100;
-		cout << ": Phuh, I would like to take a break..." << endl;
+		cout << name << ": Phuh, I would like to take a break..." << endl;
+		return;
 	}
 
 	srand(time(0));
@@ -56,6 +60,14 @@ public:
         if (food > 100) food = 100;
         gainXP(5);
         cout << name << ": Yum! That was delicious! :3" << endl;
+    }
+
+    void clrScr() {
+    #ifdef _WIN32
+    system("cls");
+    #else
+    system("clear");
+    #endif
     }
 
     void giveWater() {
@@ -94,13 +106,13 @@ public:
 
     void status() {
         cout << "=== " << name << "'s info ===" << endl;
-	cout << "Happiness: " << happiness << endl;
-	cout << "Food: " << food << endl;
-        cout << "Water: " << water << endl;
-        cout << "Hygiene: " << hygiene << endl;
-        cout << "Level: " << level << endl;
-        cout << "XP: " << xp << endl;
-	cout << "Money: SOON" << endl;
+	cout << "--> Happiness: " << happiness << endl;
+	cout << "--> Food: " << food << endl;
+        cout << "--> Water: " << water << endl;
+        cout << "--> Hygiene: " << hygiene << endl;
+        cout << "--> Level: " << level << endl;
+        cout << "--> XP: " << xp << endl;
+	cout << "--> Money: " << money << endl;
     }
 
     void saveToFile() {
@@ -137,9 +149,9 @@ public:
         while (true) {
 	    srand(time(0));
 
-	    int randomFood = rand() % 5;
-	    int randomWater = rand() % 5;
-	    int randomHygiene = rand() % 4;
+	    int randomFood = rand() % 3;
+	    int randomWater = rand() % 3;
+	    int randomHygiene = rand() % 2;
 	    int randomHappiness = rand() % 2;
 
 	    food -= randomFood;
@@ -149,37 +161,44 @@ public:
 
 	    saveToFile();
 
-            cout << "\nWhat do you want to do?" << endl;
+            cout << "\nWhat do you want to do?\n" << endl;
 	    cout << "1. Play with " << name << endl;
             cout << "2. Feed" << endl;
             cout << "3. Give Water" << endl;
             cout << "4. Clean" << endl;
             cout << "5. Check Status of " << name << endl;
-	    cout << "6. Pat the head of" << name << endl;
-            cout << "0. Exit" << endl;
+	    cout << "6. Pat the head of " << name << endl;
+            cout << "0. Exit\n" << endl;
 	    cout << "Enter your choice: ";
             cin >> choice;
 
             switch (choice) {
 		case 0:
-		    cout << "Bye my boy! :3" << endl;
+		    clrScr();
+		    cout << "Bye, my boyfriend " << userName << "! :3" << endl;
                     return;
 		case 1:
+		    clrScr();
 		    play();
 		    break;
                 case 2:
+		    clrScr();
                     feed();
                     break;
                 case 3:
+		    clrScr();
                     giveWater();
                     break;
                 case 4:
+		    clrScr();
                     clean();
                     break;
                 case 5:
+		    clrScr();
                     status();
                     break;
 		case 6:
+		    clrScr();
 		    patHead();
 		    break;
                 default:
@@ -203,6 +222,10 @@ public:
 	if (happiness < 20) {
 	    cout << name << ": Bu, I feel me sad. Do something with me! :(" << endl;
     	}
+	if (food < 0) food = 0;
+	if (water < 0) water = 0;
+	if (hygiene < 0) hygiene = 0;
+	if (happiness < 0) happiness = 0;
     }
 };
 
