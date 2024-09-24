@@ -8,7 +8,7 @@ Mika is your portable digital girlfriend, designed to be by your side at all tim
 
 ## Features
 
-1. **Auto-save:** Mika automatically saves your progress, so you never have to worry about losing your data (but still can save your progress manually in menu).
+1. **Auto-save  + Auto-Load:** Mika automatically saves your progress and loads him every time when you run this app, so you never have to worry about losing your data (but still can save your progress manually in menu). Also you can edit 'mika.txt' if you want to cheat for a little and modificate your Mika.
 2. **Terminal-based:** Mika runs directly in your terminal, making it lightweight and easy to use on any system.
 3. **Fast:** Mika is optimized for speed, ensuring smooth and responsive interactions.
 
@@ -36,13 +36,19 @@ One of Mika's standout features is the ability to customize her. You can change 
 
 The development of Mika is ongoing, with many exciting features planned for future updates. These include:
 
-- **Advanced AI:** Implementing more sophisticated AI to make Mika's interactions more lifelike and responsive.
+- **Advanced Actions:** Create a menu which includes different dialog and choices to choose.
 - **Mini-games:** Adding a variety of mini-games that you can play with Mika, providing more ways to interact and bond with her.
 - **Social Features:** Allowing Mika to interact with other digital pets, creating a virtual community of companions.
 
 ### Community and Feedback
 
 We believe that the best products are built with the input of their users. That's why we're always open to feedback and suggestions from the Mika community. Whether you have ideas for new features, improvements, or just want to share your experiences with Mika, we'd love to hear from you.
+
+## To note
+
+This app **doesn't** include any kind of vulgarity or even just small signs of it. This app should be nice for kids which are 8+ years old (but no one will stop you if you are a 70 year old, you still can play in this cute game!)
+
+Your pull requests should be fully free from any kind of vulgarity! This is a kind game which was created also for kids!
 
 ### Conclusion
 

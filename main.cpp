@@ -15,6 +15,7 @@ private:
     int level;
     int xp;
     int happiness;
+    int money;
 
 public:
     Tamagotchi(string name) {
@@ -30,19 +31,24 @@ public:
     void play() {
 	happiness += 10;
 
+	if (happiness > 100) {
+		happiness = 100;
+		cout << ": Phuh, I would like to take a break..." << endl;
+	}
+
 	srand(time(0));
 
-	int randomNum = rand() % 4;
+	int randomNum = rand() % 3;
 
-	if (randomNum = 1) {
+	if (randomNum == 0) {
 		cout << name << ": Hahaha, I like to play with you! :*" << endl;
 	}
-	if (randomNum = 2) {
+	if (randomNum == 1) {
 		cout << name << ": It was funny!" << endl;
 	}
-	else {
-	    cout << name << ": Try to chase me ahaha!" << endl;
-    }
+	if (randomNum == 2) {
+	    	cout << name << ": Try to chase me ahaha!" << endl;
+	}
     }
 
     void feed() {
@@ -61,9 +67,16 @@ public:
 
     void clean() {
         hygiene += 10;
+	happiness += 2;
         if (hygiene > 100) hygiene = 100;
         gainXP(5);
         cout << name << ": I feel so clean now! :)" << endl;
+    }
+
+    void patHead() {
+	happiness += 10;
+	gainXP(5);
+	cout << name << ": Ahhh, I like it! :3" << endl;
     }
 
     void gainXP(int amount) {
@@ -80,7 +93,7 @@ public:
     }
 
     void status() {
-        cout << "Name: " << name << endl;
+        cout << "=== " << name << "'s info ===" << endl;
 	cout << "Happiness: " << happiness << endl;
 	cout << "Food: " << food << endl;
         cout << "Water: " << water << endl;
@@ -99,6 +112,7 @@ public:
         file << level << endl;
         file << xp << endl;
 	file << happiness << endl;
+	file << money << endl;
         file.close();
     }
 
@@ -112,92 +126,62 @@ public:
             file >> level;
             file >> xp;
 	    file >> happiness;
+	    file >> money;
 	    file.close();
         }
     }
 
     void menu() {
         int choice;
+	loadFromFile();
         while (true) {
+	    srand(time(0));
+
+	    int randomFood = rand() % 5;
+	    int randomWater = rand() % 5;
+	    int randomHygiene = rand() % 4;
+	    int randomHappiness = rand() % 2;
+
+	    food -= randomFood;
+	    water -= randomWater;
+	    hygiene -= randomWater;
+	    happiness -= randomHappiness;
+
 	    saveToFile();
-	    //cout << "Game saved!" << endl; //for debug
 
             cout << "\nWhat do you want to do?" << endl;
-	    cout << "8. Play with " << name << endl;
-            cout << "1. Feed" << endl;
-            cout << "2. Give Water" << endl;
-            cout << "3. Clean" << endl;
-            cout << "4. Check Status of " << name << endl;
-            cout << "5. Save" << endl;
-            cout << "6. Load" << endl;
-            cout << "7. Exit" << endl;
+	    cout << "1. Play with " << name << endl;
+            cout << "2. Feed" << endl;
+            cout << "3. Give Water" << endl;
+            cout << "4. Clean" << endl;
+            cout << "5. Check Status of " << name << endl;
+	    cout << "6. Pat the head of" << name << endl;
+            cout << "0. Exit" << endl;
 	    cout << "Enter your choice: ";
             cin >> choice;
 
             switch (choice) {
-		case 8:
+		case 0:
+		    cout << "Bye my boy! :3" << endl;
+                    return;
+		case 1:
 		    play();
 		    break;
-                case 1:
+                case 2:
                     feed();
                     break;
-                case 2:
+                case 3:
                     giveWater();
                     break;
-                case 3:
+                case 4:
                     clean();
                     break;
-                case 4:
+                case 5:
                     status();
                     break;
-                case 5:
-                    saveToFile();
-                    cout << "Game saved!" << endl;
-                    break;
-                case 6:
-                    loadFromFile();
-                    cout << "Game loaded!" << endl;
-                    break;
-                case 7:
-	    
-	    cout << R"(
-⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣄⡀⠀⢿⡿⣁⠀⢆⡘⠤⡘⠠⢰⠃⡄⠂⠄⠀⠀⠀⠀⡀⡆⠌⢄⠀⠀⢠⡇⠂⡌⠄⠀⠀⠀⠀⠀⠀⠡⣖⠀⢃⠸⠀⠸⣟⡄⠘⡽⡜⡄⠀⠀⠀⠈⠦⠀⠀⠀⠸
-⣿⣿⣿⣿⣿⣿⡿⠁⠈⢻⡝⣟⣷⡿⢁⠤⢀⠢⢌⠰⡀⠂⡟⠠⡄⠈⠀⠀⣀⠤⠐⣰⠌⡈⢄⠂⡡⣺⠄⡇⠰⠈⡄⢃⠰⢀⠰⢀⠂⢽⠂⢼⠐⡠⠄⣿⡼⡀⠱⢹⡰⠀⠀⠀⠀⠀⣆⠀⠀⠀
-⣿⣿⣿⣿⣿⣿⠁⢄⠠⢀⣹⣞⡿⢁⢊⠰⢀⠎⡐⢂⠁⢳⠋⠴⠁⠀⣠⠞⡠⢁⣺⡇⠤⢁⠢⠘⢠⡿⢰⡏⠄⢃⡐⢈⠰⢈⠰⢸⠌⣸⠌⢺⡐⠤⢈⣽⣧⢩⡄⢉⢧⠡⠉⡍⠒⠤⣸⡀⠀⠀
-⣿⣿⣿⣿⣿⣿⠩⡐⠌⢿⡯⣿⠇⡌⠢⢡⠈⡔⠈⠂⠃⢾⢈⠒⠀⡴⢁⡾⠑⣸⢻⢀⠒⢠⠂⡉⢼⡇⢸⡇⠌⠄⡄⢃⠰⢈⠰⠸⡂⢼⢈⢹⠆⠰⢸⢿⠸⡆⢷⢈⠸⣄⠃⠤⢉⡐⠨⣧⠀⡀
-⣿⣿⣿⣿⣿⣿⡟⣿⣻⢾⡷⣿⠐⡄⢃⠆⠈⠐⠁⠀⠀⣾⠸⠀⢀⡇⣼⠇⢡⡏⣇⠢⠘⡀⠆⢡⡎⡇⢺⣇⠘⢠⠐⠨⡐⢂⠢⢡⡇⠾⢈⢸⡃⡘⢼⢸⠀⢻⠈⣇⠌⣷⢈⡐⠂⠤⢱⢿⠀⠔
-⣿⣿⣿⣿⣿⣿⣯⡚⢧⡻⣽⡏⠰⡈⢄⠈⠀⡀⠀⠀⠀⣿⢸⢀⢂⢸⡟⡈⢼⢳⠁⢂⡁⠆⡑⢺⢱⡇⣼⢿⠈⠄⡈⠡⢐⠠⢁⢺⡄⡟⡀⢺⢁⡴⡿⢸⢄⠈⡇⢺⡆⢸⡆⠤⢉⠰⢐⣸⠈⠔
-⣿⣿⣿⣿⣿⣿⣿⣷⠁⢿⣹⡇⠡⠌⠀⠀⠀⠀⠀⠀⢀⡿⣸⠀⢂⣿⢃⠐⡞⡼⢈⣄⣐⣤⡴⡯⢼⠴⡿⢼⠾⠶⠶⠶⣤⠂⠌⣹⢰⡇⡐⡏⢸⢡⡇⡽⡀⠑⢳⠐⣷⠀⢿⡇⠌⡐⠂⡽⢈⡐
-⣿⣿⣿⣿⣿⣿⣿⡏⠠⣄⣿⠄⠀⠀⠀⠀⠀⡅⠀⠠⢠⡟⣧⠈⣰⣿⠀⣼⠴⡗⢉⠉⡐⢠⢷⠃⢸⢠⠃⢸⣿⠀⢀⠂⢸⠀⢂⡏⣼⠁⣸⠁⡏⡜⡇⡧⠬⣴⣼⣀⢿⢇⢸⣹⠀⠀⡁⠇⡃⠄
-⣿⣿⣿⣿⣿⣿⣿⣇⡷⠊⢸⠀⠀⠀⢠⣦⣄⠇⡈⢁⠆⣿⣧⠐⣽⡇⠐⣾⢰⡇⢂⠡⢈⡏⡞⠀⡼⣸⠀⠀⣿⠀⠀⠂⣏⠐⢸⢡⡟⢀⡏⣼⢱⠁⣧⠁⠀⠀⠈⡟⣻⠺⣤⣿⡆⠐⠀⡇⠄⡈
-⣿⣿⣿⣿⣿⣿⣿⣿⣄⠂⣿⠀⠀⢠⠃⢿⣣⠐⠠⠌⠠⣿⣿⠀⢿⠃⢌⣿⠸⡇⢀⢂⡼⡼⠀⢀⢧⡯⠄⡀⣿⠀⠌⢰⡇⠈⣼⡿⠁⡞⣸⢇⠇⢰⡟⠀⠀⠀⠈⡇⡝⠀⢇⡟⡧⣄⠂⡇⠀⢰
-⣿⣿⣿⣿⣿⡿⢭⢿⣿⣶⣻⡆⠀⡏⠠⠸⡽⣏⠐⡈⡐⢿⣻⡠⣿⠈⢸⡍⣆⣧⣾⣾⣿⣿⣶⣾⣾⣆⠄⠀⣿⡆⠀⣸⠁⣸⡿⢁⡞⡕⡹⡌⠀⣼⢁⠤⠤⢀⣀⡇⡇⠀⠸⣼⡇⠀⠑⣷⠈⣸
-⣿⣿⣿⣿⣿⡹⢎⣗⡻⣿⣷⣇⠘⣇⠄⡁⢻⣽⡆⠡⠠⢹⣿⡓⣿⣴⣿⣿⣿⣿⡿⣟⣿⢫⣟⣏⠉⠙⠛⠶⣿⢿⠀⡞⢀⡟⢡⣾⠊⣰⠟⠀⣼⠃⣐⣤⣴⣦⣤⣧⣇⣠⠀⣿⡇⠀⡁⡏⠀⡿
-⣿⣿⣿⡟⣧⣛⡭⢶⡙⣿⢻⣿⡄⢻⡔⠠⡈⢧⢿⡆⢡⠈⢿⣇⣷⣿⡿⠛⣯⢽⡳⢧⡞⠀⠀⣽⡀⠀⠀⠀⠛⠘⠻⢣⣞⣴⠟⠁⠠⠏⠀⠐⠁⢸⣿⢿⣟⠿⣿⡿⣿⣷⣤⣸⡂⠀⢸⠃⢰⠇
-⣿⣿⡿⣹⣧⡓⢾⢷⡟⢸⣯⢹⣷⡌⢻⣄⠱⣌⠳⣿⣦⠲⠾⣿⣿⣿⠁⠈⣟⠊⢿⡧⢿⠃⡜⣸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣏⣟⡑⢀⡻⡴⢷⠈⠻⣿⣿⣟⠋⡟⢀⡎⠄
-⣿⣿⠳⣽⠲⣝⡿⢸⡇⣸⠙⣷⢺⣿⣧⡻⣷⣌⢢⡙⢽⣷⣤⠘⢧⠙⢦⡀⢻⡌⠀⢠⢁⠒⢯⡀⠀⠀⠀⠀⠀⡀⠀⢀⠀⢀⠀⠀⠀⠀⠀⠀⠀⡏⣷⣹⡏⠵⡙⣺⠀⠀⠸⣿⣿⣾⢁⡾⠀⣲
-⣿⢫⡝⣾⢹⣾⢃⢹⡇⢼⠂⣿⣹⠋⢉⡿⣾⣿⣷⣌⠲⣽⢿⣿⣮⣷⣀⠈⠀⠙⠗⠒⠚⡋⠉⠀⠀⠀⠀⣺⠂⠀⠀⢀⠀⠠⠐⣀⡀⠂⠀⠀⠀⢷⢈⠩⠀⡡⠲⠏⠀⠀⣸⢟⣽⣫⡟⢁⣴⢏
-⣏⢷⣙⣮⠟⡐⠢⢼⡇⢸⡿⢧⣟⠀⡇⡄⣤⢩⢿⣛⢷⣤⣭⣛⢿⣮⠉⠳⠦⣤⠁⠁⡡⢈⢄⠡⠅⡆⠂⠀⠀⡈⠀⢈⡠⠆⠨⢀⠀⠀⠀⠄⠐⠈⠙⡲⢷⡼⡆⠀⠄⡐⠁⣿⣿⣋⣴⣾⢋⣾
-⣞⢺⣼⠏⡐⠌⡁⣿⡇⢸⡇⠼⣿⠀⢷⠀⢹⡆⣿⡉⠚⠶⣭⣻⣿⡟⠢⢄⢤⢇⡀⡅⠦⠠⡴⠀⠀⠐⢐⠀⠆⠃⠄⠖⠉⠂⠅⠊⠁⢒⠄⠐⣀⠀⠂⠉⣀⠁⡄⠁⠈⠐⢸⣿⢫⣿⡳⣵⡿⢿
-⣎⡿⢼⠂⡅⢊⠔⣿⣵⢺⡏⠄⣿⣧⡈⠓⢌⠷⢾⡇⢁⠢⢀⢹⠑⣷⠈⡠⠏⠤⠨⣁⢃⠕⠋⡫⢗⠉⠈⡂⠁⠀⢂⠐⢁⠣⠀⠁⠀⠘⠒⠥⠴⢄⢀⠐⠁⠀⠐⠀⠀⠈⡿⣬⡿⢣⡓⣸⣇⢻
-⣾⣃⡯⢼⣀⠣⣈⣿⡽⣺⠛⢠⠹⡻⣿⣦⡀⠑⠪⣇⠂⠔⡈⡾⠊⣿⠎⠵⠃⡓⠀⡀⠉⠄⠆⠁⠉⠀⠈⠡⠂⠀⠀⡀⢈⣀⠊⣡⠂⠀⡐⠛⠊⢁⠰⠖⠃⠀⠁⢀⡀⢰⠟⡞⠡⢠⢰⣿⠸⣸
-⣿⣿⣳⢯⣿⣿⣿⣷⣽⣹⡇⠌⣷⢳⢋⠻⢿⣦⣀⡟⡀⠊⢰⡇⠂⣿⡇⠠⠁⠀⠁⠀⡐⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⡔⠁⠀⠉⠢⢀⠀⠀⠀⠀⠈⠈⠁⢀⠠⠊⠀⠈⢺⡞⠠⢁⢂⣯⡏⠵⡘
-⣿⣿⡜⣿⣿⣿⣿⣿⢾⣻⣧⡂⢹⣏⣿⡄⠌⢻⣿⣧⠀⠡⣸⠠⠁⣾⡇⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⢀⡠⠐⠁⠀⠀⠀⠀⠀⠀⠀⠉⠫⣦⠀⠀⢀⠔⠁⠀⠀⠀⡀⠀⠙⢦⢁⡞⣼⡙⢦⠑
-⣿⣿⡽⣹⣿⣿⣿⣿⡯⣷⣯⢿⣄⠻⣜⣷⡈⠄⢻⣷⠈⢠⡗⠠⠁⣿⢸⣄⠀⠀⠀⠀⠀⠀⢀⡔⠊⠉⠀⠀⠀⠀⠀⠀⡰⠂⠤⣀⠀⠀⢀⣃⠀⣰⠁⠀⠀⡴⢴⣧⠀⡀⠀⠀⠙⢦⡏⡝⢢⠌
-⡿⣿⣿⣽⣿⢿⣿⣿⡷⣣⢿⣯⣻⢷⣽⢞⣿⡄⠂⣿⠀⣸⠃⠠⢁⣷⠸⡇⠑⢤⡀⠀⣠⠞⠁⠀⠀⠀⠀⠀⠀⣀⠔⠀⠀⠀⠀⠈⢧⡀⢿⣿⣾⡿⠁⡠⢊⣴⣿⢸⡷⣄⣐⠀⢀⠄⠙⠓⠧⣌
-⣿⣷⣿⣿⣿⣿⣿⣿⡿⣵⢫⣷⣏⣟⣾⣻⣾⣿⣆⢿⠀⡿⠀⠀⠂⣼⠐⣿⡀⢀⡼⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠒⢄⡀⠀⠀⠀⠀⠑⠮⠿⠛⠒⢈⣴⣿⣿⡏⡾⢁⠈⣿⠖⠁⠀⠀⠀⠀⠀
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣳⣿⣿⣿⣯⣟⣷⢯⣿⣿⣿⢰⠃⠀⠀⠐⢸⠀⣻⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠲⠄⡀⠀⠀⠀⢀⣠⣾⣿⣿⣿⣿⣃⠇⢂⢡⠏⠀⠀⠀⠀⢀⠀⠀
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣞⢾⡻⢷⣯⣿⣼⠀⠀⠀⢀⡼⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠲⣤⣀⡀⠀⠀⠀⠀⠈⠢⣤⣾⣿⣿⣿⣿⣿⣿⣿⢸⠠⡱⠃⠀⠀⠀⣠⣶⠋⠀⠀
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢾⣽⣯⣞⣽⡟⠀⣠⠔⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠿⣷⣤⡀⠀⠀⠀⠀⠙⢿⣿⣿⣿⣿⣷⣿⢀⡜⠁⠀⠀⣠⡞⡱⠁⠀⠀⠀
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢯⢿⣿⣿⣿⣧⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠠⢀⠀⠀⠀⠀⠀⠀⠙⢿⣷⣄⡀⠀⠀⠀⠹⢿⣿⣿⣿⣿⡼⠀⠀⢀⣾⣿⡟⠀⠀⠀⠀⠀
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡻⣞⢾⡹⡿⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠂⢄⡀⠀⠀⣠⣿⣿⣿⣿⣦⣄⠀⠀⠀⠻⣿⣿⡟⢀⠀⣡⠂⢺⣿⡣⢀⢀⠄⠀⠀
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⣝⣾⣿⣧⢶⡶⣿⢿⣿⣦⣤⣀⣀⣀⣤⣀⣴⣶⣤⣤⣄⡀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⢠⣾⣿⣾⡷⣰⠉⡆⣹⣿⣿⣶⣿⣆⡀⢀
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡞⣯⢷⣏⡿⣽⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣽⣿⡿⠕⠉⢆⢱⢸⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⡽⣾⣹⡞⣷⡽⣞⡽⣯⢿⣹⢯⣿⣿⣿⣿⣯⣿⡿⣿⣿⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⢪⢿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⡽⣶⢯⡽⣞⣳⢯⡽⣞⣯⣽⢫⣿⡟⣿⣻⢿⡽⣿⣿⣿⣿⣻⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡈⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⢷⣛⡾⣽⣹⡽⢾⣹⠷⣞⣞⠿⣼⣿⡘⣯⣾⣿⢿⣹⢯⣟⡿⣿⢿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠈⠻⣿⣿⣿⣿⣿)";
-
-                    return;
+		case 6:
+		    patHead();
+		    break;
                 default:
                     cout << "Invalid choice. Please try again." << endl;
             }
@@ -207,17 +191,17 @@ public:
     }
 
     void checkNeeds() {
-        if (food < 50) {
+        if (food < 30) {
             cout << name << ": I'm hungry!" << endl;
         }
-        if (water < 50) {
+        if (water < 30) {
             cout << name << ": I'm thirsty!" << endl;
         }
         if (hygiene < 50) {
             cout << name << ": I need a bath!" << endl;
         }
-	if (happiness < 60) {
-	    cout << name << ": Bu, I feel me sad. Do something with me!" << endl;
+	if (happiness < 20) {
+	    cout << name << ": Bu, I feel me sad. Do something with me! :(" << endl;
     	}
     }
 };
