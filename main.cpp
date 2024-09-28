@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <ctime>
 
+//Ideas: add energy for Mika, 
+
 using namespace std;
 
 class Tamagotchi {
@@ -18,6 +20,7 @@ private:
     int money;
     string userName;
     int askMoneyDelay;
+    int breakFromWork;
 
 public:
     Tamagotchi(string name) {
@@ -31,6 +34,7 @@ public:
 	money = 0;
 	userName = "User"; //set your name instead + + + + + + + + + + NOTICE IT PLEASE + + + + + + + + + +
 	askMoneyDelay = 0;
+	breakFromWork = 0;
     } //that's if you don't have a saved game
 	
     void play() {
@@ -128,6 +132,7 @@ public:
 	file << happiness << endl;
 	file << money << endl;
 	file << askMoneyDelay;
+	file << breakFromWork;
         file.close();
     }
 
@@ -143,6 +148,7 @@ public:
 	    file >> happiness;
 	    file >> money;
 	    file >> askMoneyDelay;
+	    file >> breakFromWork;
 	    file.close();
         }
     }
@@ -152,16 +158,43 @@ public:
 	    bool loop = true;
 
 	    cout << "Choose a way to earn money:" << endl;
-	    cout << "1. Random number" << endl;
+	    cout << "1. Work together with " << name << endl;
 	    cout << "2. Ask " << name << "'s mother for money" << endl;
-	    cout << "0. Go back" << endl; //complete pls
+	    cout << "0. Go back" << endl;
 	    
 	    cin >> earnMoneyChoice;
 
 	    switch(earnMoneyChoice) {
 		    case 1:
-			    cout << name << ": Haha, let's play! (SOON)" << endl;
-			    break;
+			    if (breakFromWork > 20) {
+				    
+				    srand(time(0));
+				    int randomNum = rand() % 3;
+				    
+				    if (randomNum == 0) {
+					    cout << name << ": Nice, we worked in a bread store and earned 10 coins!*" << endl;
+					    money += 10;
+					    happiness += 5;
+				    }
+				    if (randomNum == 1) {
+					    cout << name << ": We worked in a Red Cross and earned only 5 coins, but it was interesting!" << endl;
+					    money += 5;
+					    happiness += 10;
+				    }
+				    if (randomNum == 2) {
+					    cout << name << ": Um, you worked as a miner and earned 20 coins. Pleasse, take a break!" << endl;
+					    money += 20;
+					    happiness -= 10;
+				    }
+			    
+
+				    breakFromWork = 0;
+			    	    return;
+			    } else {
+				    cout << name << ": I'm tired. Please, give me a break from work..." << endl;
+				    cout << "(Steps: " << breakFromWork << "/20)" << endl;
+				    return;
+			    }
 		    case 2:
 			    if (askMoneyDelay > 100) {
 				    cout << name << "'s mother: Okay, that's for you. These money only for my daughter!" << endl;
@@ -173,6 +206,8 @@ public:
 				    cout << "(Steps: " << askMoneyDelay << "/100)" << endl;
 				    return;
 			    }
+		    case 0:
+			    return;
 		    default:
 		    	cout << name << ": Um, can you repeat please? (Wrong choice)" << endl;
 		    	return;
@@ -196,6 +231,7 @@ public:
 	    happiness -= randomHappiness;
 
 	    askMoneyDelay += 1;
+	    breakFromWork += 1;
 
 	    saveToFile();
 
