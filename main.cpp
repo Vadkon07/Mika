@@ -153,6 +153,15 @@ public:
         }
     }
 
+    void userContinue() {
+	    cout << "Press ENTER to continue..." << endl;
+	    // FINISH IT... getchar
+    }
+
+    void visitClothesShop() {
+	    cout << name << ": Wow! I see that soon this shop will have a lot of clothes which you will buy for me! :)" << endl;
+    }
+
     void earnMoney() {
 	    int earnMoneyChoice;
 	    bool loop = true;
@@ -235,12 +244,14 @@ public:
 
 	    saveToFile();
 
-            cout << "\nWhat do you want to do?\n" << endl;
+	    status();
+
+            cout << "\n\nWhat do you want to do?\n" << endl;
 	    cout << "1. Play with " << name << endl;
             cout << "2. Feed" << endl;
             cout << "3. Give Water" << endl;
             cout << "4. Clean" << endl;
-            cout << "5. Check Status of " << name << endl;
+            cout << "5. Visit clothes shop together with " << name << endl;
 	    cout << "6. Pat the head of " << name << endl;
 	    cout << "7. Earn money" << endl;
             cout << "0. Exit\n" << endl;
@@ -270,7 +281,7 @@ public:
                     break;
                 case 5:
 		    clrScr();
-                    status();
+                    visitClothesShop();
                     break;
 		case 6:
 		    clrScr();
