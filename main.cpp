@@ -165,13 +165,16 @@ public:
         }
     }
 
-    void userContinue() {
-	    cout << "Press ENTER to continue..." << endl;
-	    // FINISH IT... getchar
+    void userCont() {
+	    printf("\nPress ENTER to continue...\n");
+	    while (getchar() != '\n');
+	    getchar();
     }
 
     void visitClothesShop() {
 	    cout << name << ": Wow! I see that soon this shop will have a lot of clothes which you will buy for me! :)" << endl;
+	    userCont();
+	    clrScr();
     }
 
     void earnMoney() {
@@ -203,7 +206,7 @@ public:
 					    happiness += 10;
 				    }
 				    if (randomNum == 2) {
-					    cout << name << ": Um, you worked as a miner and earned 20 coins. Pleasse, take a break!" << endl;
+					    cout << name << ": Um, you worked as a miner and earned 20 coins. Please, take a break!" << endl;
 					    money += 20;
 					    happiness -= 10;
 				    }
