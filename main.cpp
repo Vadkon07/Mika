@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include "wardrobe.h"
 
 //Ideas: add energy for Mika, 
 
@@ -62,7 +63,12 @@ public:
     }
 
     void feed() {
+	    if (money < 1) {
+		    cout << "You don't have enough money to buy a food for " << name << ", try to work at first" << endl;
+		    return;
+	    }
         food += 10;
+	money -= 1;
         if (food > 100) food = 100;
         gainXP(5);
         cout << name << ": Yum! That was delicious! :3" << endl;
@@ -77,7 +83,13 @@ public:
     }
 
     void giveWater() {
+	   if (money < 1) {
+		    cout << "You don't have enough money to buy a food for " << name << ", try to work at first" << endl;
+		    return;
+	    }
+
         water += 10;
+	money -= 1;
         if (water > 100) water = 100;
         gainXP(5);
         cout << name << ": Ah, refreshing! Thank you so much! ^-^" << endl;
@@ -223,6 +235,48 @@ public:
 	    }
     }
 
+    void openWardrobe() {
+    Wardrobe myWardrobe;
+
+    // Initialize wardrobe items
+    strcpy(myWardrobe.hat, "None");
+    strcpy(myWardrobe.accessories, "black sunglasses, pink backpack");
+    strcpy(myWardrobe.clothes, "schoolgirl uniform");
+    strcpy(myWardrobe.shoes, "None");
+
+    int choice;
+    do {
+        printf("1. Hats\n");
+        printf("2. Accessories\n");
+        printf("3. Clothes\n");
+        printf("4. Shoes\n");
+        printf("5. Show chosen clothes\n");
+        printf("0. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 0:
+                break;
+            case 5:
+                showWardrobe(myWardrobe);
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while(choice != 0);
+
+    return;
+}
+
+    void showWardrobe(Wardrobe w) {
+    	printf("== Chosen clothes ==\n");
+    	printf("Hat: %s\n", w.hat);
+    	printf("Accessories: %s\n", w.accessories);
+    	printf("Clothes: %s\n", w.clothes);
+    	printf("Shoes: %s\n\n", w.shoes);
+    }
+
     void menu() {
         int choice;
 	loadFromFile();
@@ -254,6 +308,7 @@ public:
             cout << "5. Visit clothes shop together with " << name << endl;
 	    cout << "6. Pat the head of " << name << endl;
 	    cout << "7. Earn money" << endl;
+	    cout << "8. Open wardrobe (SOON)" << endl;
             cout << "0. Exit\n" << endl;
 	    cout << "Enter your choice: ";
             cin >> choice;
@@ -290,6 +345,10 @@ public:
 		case 7:
 		    clrScr();
 		    earnMoney();
+		    break;
+		case 8:
+		    clrScr();
+		    openWardrobe();
 		    break;
                 default:
                     cout << "Invalid choice. Please try again." << endl;
